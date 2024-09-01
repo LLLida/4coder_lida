@@ -1,4 +1,3 @@
-
 static struct
 {
     String_Const_u8 string;
@@ -6,7 +5,6 @@ static struct
 }
 global_tooltips[32] = {0};
 static int global_tooltip_count = 0;
-static Arena global_frame_arena;
 
 static String_Const_u8
 StringStripBorderCharacters(String_Const_u8 string)
@@ -174,7 +172,7 @@ CRC32(unsigned char *buf, int len)
         0xafb010b1, 0xab710d06, 0xa6322bdf, 0xa2f33668,
         0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
     };
-    
+
     unsigned int crc = init;
     while(len--)
     {

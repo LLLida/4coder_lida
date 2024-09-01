@@ -11,17 +11,17 @@ static struct
     f32 enabled_t;
     int ticks_to_enable;
     int ticks_to_disable;
-    
+
     int particle_count;
     Particle particles[4096];
-    
+
     int keypress_history_count;
     struct
     {
         u64 time;
     }
     keypress_history[64];
-    
+
     f32 screen_shake;
 }
 power_mode;
@@ -70,7 +70,7 @@ internal void
 F4_PowerMode_CharacterPressed(void)
 {
     u64 now = system_now_time();
-    
+
     if(power_mode.keypress_history_count > 0)
     {
         u64 last_keypress_time = power_mode.keypress_history[power_mode.keypress_history_count-1].time;
@@ -81,7 +81,7 @@ F4_PowerMode_CharacterPressed(void)
             power_mode.keypress_history_count = 0;
         }
     }
-    
+
     if(power_mode.keypress_history_count >= ArrayCount(power_mode.keypress_history))
     {
         memmove(power_mode.keypress_history + 0, power_mode.keypress_history + 1,
@@ -90,7 +90,7 @@ F4_PowerMode_CharacterPressed(void)
     }
     power_mode.keypress_history[power_mode.keypress_history_count].time = now;
     power_mode.keypress_history_count += 1;
-    
+
     if(F4_PowerMode_IsEnabled())
     {
         int rando = (int)rand();
@@ -128,13 +128,13 @@ F4_PowerMode_CameraOffsetFromView(Application_Links *app, View_ID view)
     Buffer_Scroll scroll = view_get_buffer_scroll(app, view);
     Face_ID face = get_face_id(app, buffer);
     Face_Metrics metrics = get_face_metrics(app, face);
-    
+
     Vec2_f32 v =
     {
         scroll.position.pixel_shift.x,
         scroll.position.pixel_shift.y + scroll.position.line_number*metrics.line_height,
     };
-    
+
     return v;
 }
 
@@ -144,7 +144,7 @@ F4_PowerMode_Spawn(Application_Links *app, View_ID view, u8 character)
     if(F4_PowerMode_IsEnabled())
     {
         Vec2_f32 camera = F4_PowerMode_CameraOffsetFromView(app, view);
-        
+
         for(int i = 0; i < 60; ++i)
         {
             String_Const_u8 string = {};
@@ -177,7 +177,7 @@ F4_PowerMode_Spawn(Application_Links *app, View_ID view, u8 character)
                     scale = 0;
                 }
             }
-            
+
             f32 movement_angle = RandomF32(-3.1415926535897f*3.f/2.f, 3.1415926535897f*1.f/3.f);
             f32 velocity_magnitude = RandomF32(20.f, 180.f);
             f32 velocity_x = cosf(movement_angle)*velocity_magnitude;
@@ -195,7 +195,7 @@ F4_PowerMode_Spawn(Application_Links *app, View_ID view, u8 character)
                 p->string = {p->chrs, 1};
             }
         }
-        
+
         power_mode.screen_shake += RandomF32(6.f, 16.f);
     }
 }
@@ -203,20 +203,6 @@ F4_PowerMode_Spawn(Application_Links *app, View_ID view, u8 character)
 internal void
 F4_PowerMode_Tick(Application_Links *app, Frame_Info frame_info)
 {
-    // NOTE(rjf): Load keystroke sounds.
-    if(power_mode.enabled && power_mode.allowed)
-    {
-        for(int i = 0; i < ArrayCount(f4_powermode_keystroke_sounds); i += 1)
-        {
-            char path[256];
-            snprintf(path, sizeof(path), "sounds/PowerKey-%03d.wav", i+1);
-            F4_RequireWAV(app, &f4_powermode_keystroke_sounds[i], path);
-            f4_powermode_keystroke_sounds[i].channel_volume[0] = 0.25f;
-            f4_powermode_keystroke_sounds[i].channel_volume[1] = 0.25f;
-        }
-    }
-    
-    power_mode.screen_shake -= power_mode.screen_shake * frame_info.animation_dt * 12.f;
     if(F4_PowerMode_ActiveCharactersPerMinute() > 200.f)
     {
         if(power_mode.ticks_to_enable > 0)
@@ -226,14 +212,8 @@ F4_PowerMode_Tick(Application_Links *app, Frame_Info frame_info)
         }
         if(power_mode.ticks_to_enable <= 0)
         {
-            if(power_mode.enabled == 0)
-            {
-                power_mode.enabled = 1;
-                F4_RequireWAV(app, &f4_powermode_music, "sounds/chtulthu.wav");
-            }
-            
             power_mode.ticks_to_disable = 120;
-            
+
             f32 right_volume = 0.4f;
             f32 left_volume = 0.4f;
             View_ID active_view = get_active_view(app, Access_Always);
@@ -247,7 +227,7 @@ F4_PowerMode_Tick(Application_Links *app, Frame_Info frame_info)
             {
                 right_volume *= 0.2f;
             }
-            
+
             f4_powermode_music_ctrl.channel_volume[0] += (left_volume - f4_powermode_music_ctrl.channel_volume[0]) * frame_info.animation_dt;
             f4_powermode_music_ctrl.channel_volume[1] += (right_volume - f4_powermode_music_ctrl.channel_volume[1]) * frame_info.animation_dt;
             if(!def_audio_is_playing(&f4_powermode_music_ctrl))
@@ -263,7 +243,7 @@ F4_PowerMode_Tick(Application_Links *app, Frame_Info frame_info)
             power_mode.ticks_to_disable -= 1;
             animate_in_n_milliseconds(app, 0);
         }
-        
+
         if(power_mode.ticks_to_disable <= 0)
         {
             power_mode.enabled = 0;
@@ -277,7 +257,7 @@ F4_PowerMode_Tick(Application_Links *app, Frame_Info frame_info)
             }
         }
     }
-    
+
     power_mode.enabled_t += ((f32)(!!power_mode.enabled) - power_mode.enabled_t) * frame_info.animation_dt;
 }
 
@@ -285,18 +265,18 @@ internal void
 F4_PowerMode_RenderBuffer(Application_Links *app, View_ID view, Face_ID face, Frame_Info frame_info)
 {
     ProfileScope(app, "[Fleury] Power Mode");
-    
+
     Buffer_Scroll buffer_scroll = view_get_buffer_scroll(app, view);
     Face_Metrics metrics = get_face_metrics(app, face);
-    
+
     if(power_mode.particle_count > 0)
     {
         animate_in_n_milliseconds(app, 0);
     }
-    
+
     f32 camera_x = buffer_scroll.position.pixel_shift.x;
     f32 camera_y = buffer_scroll.position.pixel_shift.y + buffer_scroll.position.line_number*metrics.line_height;
-    
+
     for(int i = 0; i < power_mode.particle_count;)
     {
         // NOTE(rjf): Update particle.
@@ -308,7 +288,7 @@ F4_PowerMode_RenderBuffer(Application_Links *app, View_ID view, Face_ID face, Fr
             power_mode.particles[i].velocity_y += 10.f * frame_info.animation_dt;
             power_mode.particles[i].alpha -= power_mode.particles[i].decay_rate * 0.3f * frame_info.animation_dt;
         }
-        
+
         if(power_mode.particles[i].alpha <= 0.f)
         {
             power_mode.particles[i] = power_mode.particles[--power_mode.particle_count];
@@ -334,7 +314,7 @@ F4_PowerMode_RenderBuffer(Application_Links *app, View_ID view, Face_ID face, Fr
                     draw_string(app, face, power_mode.particles[i].string, rect.p0, color);
                 }
             }
-            
+
             ++i;
         }
     }
@@ -345,7 +325,7 @@ F4_PowerMode_RenderWholeScreen(Application_Links *app, Frame_Info frame_info)
 {
     Scratch_Block scratch(app);
     Rect_f32 rect = global_get_screen_rectangle(app);
-    
+
     // NOTE(rjf): Power mode border
     if(power_mode.enabled_t > 0.1f)
     {
@@ -356,7 +336,7 @@ F4_PowerMode_RenderWholeScreen(Application_Links *app, Frame_Info frame_info)
             draw_rectangle_outline(app, glow_rect, 0.f, 15.f - (f32)i, color);
         }
     }
-    
+
     if(power_mode.allowed)
     {
         Face_ID face_id = get_face_id(app, 0);

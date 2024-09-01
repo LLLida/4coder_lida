@@ -4,10 +4,7 @@
 #define FCODER_FLEURY_LANG_LIST_H
 
 // NOTE(rjf): Include language files here.
-#include "generated/4coder_fleury_lexer_jai.h"
-#include "generated/4coder_fleury_lexer_jai.cpp"
 #include "4coder_fleury_lang_cpp.cpp"
-#include "4coder_fleury_lang_jai.cpp"
 #include "4coder_fleury_lang_metadesk.cpp"
 
 // NOTE(rjf): @f4_register_languages Register languages.
@@ -32,18 +29,7 @@ F4_RegisterLanguages(void)
                                 Lex_State_Cpp);
         }
     }
-    
-    // NOTE(rjf): Jai
-    {
-        F4_RegisterLanguage(S8Lit("jai"),
-                            F4_Jai_IndexFile,
-                            lex_full_input_jai_init,
-                            lex_full_input_jai_breaks,
-                            F4_Jai_PosContext,
-                            F4_Jai_Highlight,
-                            Lex_State_Jai);
-    }
-    
+
     // NOTE(rjf): Metadesk
     {
         String_Const_u8 extensions[] =

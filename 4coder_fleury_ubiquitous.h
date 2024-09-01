@@ -3,8 +3,8 @@
 
 enum keybinding_mode
 {
-	KeyBindingMode_0,
-	KeyBindingMode_1,
+    KeyBindingMode_0,
+    KeyBindingMode_1,
     KeyBindingMode_2,
     KeyBindingMode_3,
     KeyBindingMode_MAX
@@ -22,7 +22,6 @@ static b32 global_dark_mode = 1;
 static b32 global_battery_saver = 0;
 static View_ID global_compilation_view = 0;
 static b32 global_compilation_view_expanded = 0;
-global Arena permanent_arena = {};
 
 #define MemorySet                 memset
 #define MemoryCopy                memcpy
