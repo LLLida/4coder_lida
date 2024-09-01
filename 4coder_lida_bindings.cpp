@@ -87,7 +87,12 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(keyboard_macro_start_recording , KeyCode_U, KeyCode_Control);
     Bind(keyboard_macro_finish_recording, KeyCode_U, KeyCode_Control, KeyCode_Shift);
     Bind(keyboard_macro_replay,           KeyCode_U, KeyCode_Alt);
+ 
     Bind(change_active_panel,           KeyCode_O, KeyCode_Alt);
+    Bind(close_panel,                   KeyCode_0, KeyCode_Alt);
+    Bind(open_panel_vsplit,             KeyCode_3, KeyCode_Alt);
+    Bind(open_panel_hsplit,             KeyCode_2, KeyCode_Alt);
+ 
     Bind(interactive_open_or_new,       KeyCode_O, KeyCode_Control);
     Bind(interactive_switch_buffer,     KeyCode_I, KeyCode_Control);
     Bind(project_go_to_root_directory,  KeyCode_H, KeyCode_Control);
@@ -99,8 +104,8 @@ lida_SetDefaultBindings(Mapping* mapping)
     // Bind(build_in_build_panel,          KeyCode_M, KeyCode_Alt);
     // Bind(goto_first_jump,               KeyCode_M, KeyCode_Alt, KeyCode_Shift);
     // Bind(toggle_filebar,                KeyCode_B, KeyCode_Alt);
-    Bind(execute_any_cli,               KeyCode_F2);
-    Bind(execute_previous_cli,          KeyCode_F1);
+    //Bind(execute_any_cli,               KeyCode_F2);
+    //Bind(execute_previous_cli,          KeyCode_F1);
     Bind(command_lister,                KeyCode_X, KeyCode_Alt);
     Bind(project_command_lister,        KeyCode_X, KeyCode_Alt, KeyCode_Shift);
     Bind(list_all_functions_current_buffer_lister, KeyCode_I, KeyCode_Control, KeyCode_Shift);
@@ -108,16 +113,8 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(increase_face_size, KeyCode_Equal, KeyCode_Control, KeyCode_Shift); // PLUS+Control
     Bind(decrease_face_size, KeyCode_Minus, KeyCode_Control);
 
-    // NOTE(rjf): Custom bindings.
-    {
-        // Bind(open_panel_vsplit, KeyCode_P, KeyCode_Control);
-        // Bind(open_panel_hsplit, KeyCode_Minus, KeyCode_Control);
-        // Bind(close_panel, KeyCode_P, KeyCode_Control, KeyCode_Shift);
-        // Bind(f4_search_for_definition__project_wide, KeyCode_J, KeyCode_Control);
-        // Bind(f4_search_for_definition__current_file, KeyCode_J, KeyCode_Control, KeyCode_Shift);
-        Bind(move_right_token_boundary, KeyCode_F, KeyCode_Alt);
-        Bind(move_left_token_boundary, KeyCode_B, KeyCode_Alt);
-    }
+    Bind(move_right_token_boundary, KeyCode_F, KeyCode_Alt);
+    Bind(move_left_token_boundary, KeyCode_B, KeyCode_Alt);
 
     SelectMap(file_map_id);
     ParentMap(global_map_id);
@@ -160,6 +157,7 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(delete_alpha_numeric_boundary,    KeyCode_Delete, KeyCode_Control);
     Bind(snipe_backward_whitespace_or_token_boundary, KeyCode_Backspace, KeyCode_Alt);
     Bind(snipe_forward_whitespace_or_token_boundary,  KeyCode_Delete, KeyCode_Alt);
+    Bind(snipe_forward_whitespace_or_token_boundary,  KeyCode_D, KeyCode_Alt);
     Bind(set_mark,                    KeyCode_Space, KeyCode_Control);
     // Bind(replace_in_range,            KeyCode_A, KeyCode_Control);
     Bind(copy,                        KeyCode_C, KeyCode_Control);
@@ -222,9 +220,11 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(select_next_scope_after_current, KeyCode_Quote, KeyCode_Alt, KeyCode_Shift);
     // Bind(place_in_scope,             KeyCode_ForwardSlash, KeyCode_Alt);
     Bind(delete_current_scope,       KeyCode_K, KeyCode_Control, KeyCode_Alt);
-    // Bind(if0_off,                    KeyCode_I, KeyCode_Alt);
     Bind(open_file_in_quotes,        KeyCode_1, KeyCode_Alt);
     Bind(open_matching_file_cpp,     KeyCode_2, KeyCode_Alt);
+ 
+    Bind(jump_to_definition_at_cursor, KeyCode_Period, KeyCode_Alt);
+    Bind(jump_to_last_point, KeyCode_Comma, KeyCode_Alt);
 }
 
 function void

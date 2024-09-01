@@ -147,10 +147,8 @@ CUSTOM_DOC("the main startup function")
 
     //~ NOTE(rjf): Initialize panels
     {
-        Buffer_Identifier comp = buffer_identifier(string_u8_litexpr("*compilation*"));
         Buffer_Identifier left = buffer_identifier(string_u8_litexpr("*scratch*"));
         Buffer_Identifier right = buffer_identifier(string_u8_litexpr("*messages*"));
-        Buffer_ID comp_id = buffer_identifier_to_id(app, comp);
         Buffer_ID left_id = buffer_identifier_to_id(app, left);
         Buffer_ID right_id = buffer_identifier_to_id(app, right);
 
@@ -158,20 +156,6 @@ CUSTOM_DOC("the main startup function")
         View_ID view = get_active_view(app, Access_Always);
         new_view_settings(app, view);
         view_set_buffer(app, view, left_id, 0);
-
-        // NOTE(rjf): Bottom panel
-        View_ID compilation_view = 0;
-        {
-            compilation_view = open_view(app, view, ViewSplit_Bottom);
-            new_view_settings(app, compilation_view);
-            Buffer_ID buffer = view_get_buffer(app, compilation_view, Access_Always);
-            Face_ID face_id = get_face_id(app, buffer);
-            Face_Metrics metrics = get_face_metrics(app, face_id);
-            view_set_split_pixel_size(app, compilation_view, (i32)(metrics.line_height*4.f));
-            view_set_passive(app, compilation_view, true);
-            global_compilation_view = compilation_view;
-            view_set_buffer(app, compilation_view, comp_id, 0);
-        }
 
         view_set_active(app, view);
 
