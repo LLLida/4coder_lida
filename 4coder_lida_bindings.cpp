@@ -92,6 +92,8 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(close_panel,                   KeyCode_0, KeyCode_Alt);
     Bind(open_panel_vsplit,             KeyCode_3, KeyCode_Alt);
     Bind(open_panel_hsplit,             KeyCode_2, KeyCode_Alt);
+    Bind(toggle_filebar,                KeyCode_8, KeyCode_Alt);
+    Bind(close_build_panel,             KeyCode_9, KeyCode_Alt);
  
     Bind(interactive_open_or_new,       KeyCode_O, KeyCode_Control);
     Bind(interactive_switch_buffer,     KeyCode_I, KeyCode_Control);
@@ -102,12 +104,9 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(goto_prev_jump,                KeyCode_LeftBracket, KeyCode_Alt);
     Bind(goto_next_jump,                KeyCode_RightBracket, KeyCode_Alt);
     // Bind(build_in_build_panel,          KeyCode_M, KeyCode_Alt);
-    // Bind(goto_first_jump,               KeyCode_M, KeyCode_Alt, KeyCode_Shift);
-    // Bind(toggle_filebar,                KeyCode_B, KeyCode_Alt);
     //Bind(execute_any_cli,               KeyCode_F2);
     //Bind(execute_previous_cli,          KeyCode_F1);
     Bind(command_lister,                KeyCode_X, KeyCode_Alt);
-    Bind(project_command_lister,        KeyCode_X, KeyCode_Alt, KeyCode_Shift);
     Bind(list_all_functions_current_buffer_lister, KeyCode_I, KeyCode_Control, KeyCode_Shift);
 
     Bind(increase_face_size, KeyCode_Equal, KeyCode_Control, KeyCode_Shift); // PLUS+Control
@@ -115,6 +114,8 @@ lida_SetDefaultBindings(Mapping* mapping)
 
     Bind(move_right_token_boundary, KeyCode_F, KeyCode_Alt);
     Bind(move_left_token_boundary, KeyCode_B, KeyCode_Alt);
+ 
+    Bind(project_command_lister,        KeyCode_F5);
 
     SelectMap(file_map_id);
     ParentMap(global_map_id);
@@ -160,7 +161,6 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(snipe_forward_whitespace_or_token_boundary,  KeyCode_D, KeyCode_Alt);
     Bind(set_mark,                    KeyCode_Space, KeyCode_Control);
     // Bind(replace_in_range,            KeyCode_A, KeyCode_Control);
-    Bind(copy,                        KeyCode_C, KeyCode_Control);
     Bind(delete_range,                KeyCode_Backspace, KeyCode_Control);
     Bind(delete_line,                 KeyCode_W, KeyCode_Control);
     Bind(center_view,                 KeyCode_L, KeyCode_Control);
@@ -182,11 +182,19 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(save_all_dirty_buffers,      KeyCode_S, KeyCode_Control, KeyCode_Shift);
     Bind(search_identifier,           KeyCode_T, KeyCode_Control);
     Bind(list_all_locations_of_identifier, KeyCode_T, KeyCode_Control, KeyCode_Shift);
+    
+    Bind(copy,                        KeyCode_C, KeyCode_Control);
     Bind(paste_and_indent,            KeyCode_V, KeyCode_Control);
-    Bind(paste_next_and_indent,       KeyCode_V, KeyCode_Control, KeyCode_Shift);
+    Bind(paste_next_and_indent,       KeyCode_V, KeyCode_Alt);
     Bind(cut,                         KeyCode_X, KeyCode_Control);
     Bind(redo,                        KeyCode_Y, KeyCode_Control);
     Bind(undo,                        KeyCode_Z, KeyCode_Control);
+    
+    // rectangle operations from clearfield
+    Bind(copy_rect,                   KeyCode_C, KeyCode_Control, KeyCode_Shift);
+    Bind(paste_rect_naive,            KeyCode_V, KeyCode_Control, KeyCode_Shift);
+    Bind(kill_rect,                   KeyCode_X, KeyCode_Control, KeyCode_Shift);
+    
     Bind(view_buffer_other_panel,     KeyCode_1, KeyCode_Control);
     Bind(swap_panels,                 KeyCode_2, KeyCode_Control);
 

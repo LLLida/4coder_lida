@@ -42,6 +42,8 @@ global Arena permanent_arena = {};
 #include "4coder_fleury_base_commands.cpp"
 #include "4coder_fleury_hooks.cpp"
 
+#include "4coder_clearfield_rect.cpp"
+
 #include "4coder_lida_bindings.cpp"
 
 //~ NOTE(rjf): 4coder Stuff
