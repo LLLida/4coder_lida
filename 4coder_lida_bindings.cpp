@@ -98,7 +98,10 @@ lida_SetDefaultBindings(Mapping* mapping)
     Bind(interactive_open_or_new,       KeyCode_O, KeyCode_Control);
     Bind(interactive_switch_buffer,     KeyCode_I, KeyCode_Control);
     Bind(project_go_to_root_directory,  KeyCode_H, KeyCode_Control);
+    
     Bind(save_all_dirty_buffers,        KeyCode_S, KeyCode_Control, KeyCode_Shift);
+    Bind(nix_reload_changed_buffers,    KeyCode_F6);
+    
     // Bind(change_to_build_panel,         KeyCode_Period, KeyCode_Alt);
     // Bind(close_build_panel,             KeyCode_Comma, KeyCode_Alt);
     Bind(goto_prev_jump,                KeyCode_LeftBracket, KeyCode_Alt);
